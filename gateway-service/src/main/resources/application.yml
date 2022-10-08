@@ -3,8 +3,8 @@ server:
   
 eureka:
   client:
-    register-with-eureka: false
-    fetch-registry: false
+    register-with-eureka: true
+    fetch-registry: true
     service-url:
       defaultZone: http://localhost:8761/eureka
       
@@ -15,6 +15,10 @@ spring:
   cloud:
     gateway:
       routes:
+      - id: user-service
+        uri: lb://USER-SERVICE
+        predicates:
+        - Path=/user-service/**
       - id: first-service
         uri: http://localhost:8081/first-service/**
         predicates:
