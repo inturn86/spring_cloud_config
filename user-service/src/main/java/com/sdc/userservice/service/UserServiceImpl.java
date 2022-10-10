@@ -3,9 +3,10 @@ package com.sdc.userservice.service;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import org.apache.commons.lang.ObjectUtils;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,6 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public UserDto createUser(UserDto userDto) {
-		// TODO Auto-generated method stub
 		userDto.setUserId(UUID.randomUUID().toString());
 
 		ModelMapper mapper = new ModelMapper();
@@ -63,6 +63,17 @@ public class UserServiceImpl implements UserService{
 	public Iterable<UserEntity> getUserByAll() {
 		// TODO Auto-generated method stub
 		return userRepository.findAll();
+	}
+
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		UserEntity userEntity = userRepository.findByEmail(username);
+
+		if(userEntity == null) {
+			throw new UsernameNotFoundException(username);
+		}
+
+		return new User(userEntity.getEmail(), userEntity.getEncryptedPwd(), true, true, true, true, new ArrayList<>());
 	}
 
 }
