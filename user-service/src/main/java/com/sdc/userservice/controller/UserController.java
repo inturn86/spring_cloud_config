@@ -24,7 +24,7 @@ import com.sdc.userservice.vo.RequestUser;
 import com.sdc.userservice.vo.ResponseUser;
 
 @RestController
-@RequestMapping("/user-service")
+@RequestMapping("/")
 public class UserController {
 
 	private Environment evn;
@@ -59,7 +59,7 @@ public class UserController {
 		UserDto userDto = mapper.map(user, UserDto.class);
 		UserDto returnUserDto = userService.createUser(userDto);
 
-		ResponseUser res = mapper.map(userDto, ResponseUser.class);
+		ResponseUser res = mapper.map(returnUserDto, ResponseUser.class);
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(res);
 	}
