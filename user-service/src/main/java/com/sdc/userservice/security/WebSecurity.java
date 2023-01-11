@@ -2,6 +2,7 @@ package com.sdc.userservice.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.env.Environment;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,6 +21,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
+	@Autowired
+	private Environment env;
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http.csrf().disable();
@@ -34,8 +38,8 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
 
 	private AuthenticationFilter getAuthenticationFilter() throws Exception {
 
-		AuthenticationFilter af = new AuthenticationFilter();
-		af.setAuthenticationManager(authenticationManager());
+		AuthenticationFilter af = new AuthenticationFilter(authenticationManager(), userService, env);
+//		af.setAuthenticationManager(authenticationManager());
 
 		return af;
 	}
