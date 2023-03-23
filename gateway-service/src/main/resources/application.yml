@@ -24,11 +24,22 @@ spring:
         uri: lb://USER-SERVICE
         predicates:
           - Path=/user-service/**
-#          - Method=POST
+          - Method=POST
         filters:
           - RemoveRequestHeader=Cookie
           # RewritePath는 user-service라는 것으로 요청할 때 앞의 url로 호출되었을 경우 뒤의 url로 변경.
           - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+
+      - id: user-service
+        uri: lb://USER-SERVICE
+        predicates:
+          - Path=/user-service/**
+          - Method=GET
+        filters:
+          - RemoveRequestHeader=Cookie
+          # RewritePath는 user-service라는 것으로 요청할 때 앞의 url로 호출되었을 경우 뒤의 url로 변경.
+          - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+          - AuthorizationHeaderFilter
 
 #      - id: user-service
 #        uri: lb://USER-SERVICE
@@ -57,7 +68,6 @@ spring:
         uri: lb://ORDER-SERVICE
         predicates:
           - Path=/order-service/**
-        
 #      - id: first-service
 #        uri: http://localhost:8081/first-service/**
 #        predicates:
@@ -65,6 +75,24 @@ spring:
 #      - id: second-service
 #        uri: http://localhost:8082/second-service/**
 #        predicates:
-#        - Path=/second-service/** 
-  
-    
+#        - Path=/second-service/**
+      
+      - id: user-service
+        uri: lb://USER-SERVICE
+        predicates:
+          - Path=/user-service/actuator/**
+          - Method=GET, POST
+        filters:
+          - RemoveRequestHeader=Cookie
+          # RewritePath는 user-service라는 것으로 요청할 때 앞의 url로 호출되었을 경우 뒤의 url로 변경.
+          - RewritePath=/user-service/(?<segment>.*), /$\{segment}
+
+
+#token:
+#  secret: user_token
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans, httptrace
