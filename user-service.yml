@@ -1,0 +1,17 @@
+spirng:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:~/test;AUTO_SERVER=TRUE
+    username: sa
+#    password: '{cipher}AQB3BuIqQbz9QxSewMvGy5JNm0tqFz0rMf0qjF5hpNyZ94asEgsCDoYG8NGyr5wPFtusD57idt1N9aCmpOueXqjTtjN6JrsuBwWd6CyU0FTOUykDMGHmSgKZOEEGooYGXZXSsmFct69hbcFdmodcDs1sPKDvIXI9YWGY9do8NbldafcPXRxs+kulv8/oxmT8ppmFnci0ZoJNRAWC0fBAEwoOXCbCEBhvOloWWvGwsGZCf14zMQ5PHmiSqEvPgw2HtY7odnBPgQ0ml79jNxO7JZMXURYmMEU+fCq+lVO1lwz4LqfsWRrPeS2zv9n4Qj3Egxsmi/kxjfCvaykSgOy0J107osYrwVwJN4mRvwfMuckfcFj8C74GOyd/LETBs6837i8='
+token:
+  expiration_time: 864000000
+  secret: '{cipher}AQCnKTY2qfi6+lZ0yDkW57PtqAIztURNqShYiE8+x7nMBm9NY0CHCgw8QhQyzQXqDGEwSe6sj139ibP5FYNmIYPVCeJJFEa2eLedBcHDd7vxhkmlFTq9W0hWLCayDfXEas7+IvbkisPbdOUwD1c3nYvrS/sBiwkA4X8j0wAFNEh2YvX3lVUdmOLaYHg6TA99ZT/ehp1XbbrldG5pkk/NfXFS2GT+gE4nlUYRjiIdDUcJOz2YU6fvW8qxcIUYO7k9L6UEl6Ou4KmrvULT/aRXI5kUINHBCJrSO3D6dWnjewK2tO7LTaziMjFf9WieVMDgVAH1rs73su49/iXU6qg17UjuhBBGjGMpTbls4XtBlfwPPHSu4pN9S0ryyeZrI6PhYMidHOinsprHHKNPoucLmgJD'
+
+gateway:
+  ip: 172.18.0.5
+  
+order_service:
+  url: http://ORDER-SERVICE/order-service/%s/orders
+  exception:
+    order_list_empty: User's orders is empty.
